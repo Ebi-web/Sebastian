@@ -1,9 +1,19 @@
 version: '3.9'
 services:
-  backend:
-    container_name: backend
+  web:
+    container_name: web
     build: .
     ports:
       - '8000:8000'
     volumes:
       - .:/app
+    depends_on:
+      - db
+  db:
+    container_name: mysql
+    image: mysql
+    environment:
+      MYSQL_DATABASE: sebastian
+      MYSQL_ROOT_PASSWORD: # password
+    ports:
+      - '3306:3306'
