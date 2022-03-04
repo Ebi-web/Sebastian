@@ -10,10 +10,13 @@ services:
     depends_on:
       - db
   db:
-    container_name: mysql
+    container_name: sebastian-db
     image: mysql
     environment:
       MYSQL_DATABASE: sebastian
-      MYSQL_ROOT_PASSWORD: # password
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_ALLOW_EMPTY_PASSWORD: yes
     ports:
       - '3306:3306'
+    volumes:
+      - ./initdb.d/:/docker-entrypoint-initdb.d/
