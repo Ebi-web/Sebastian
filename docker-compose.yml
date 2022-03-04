@@ -13,9 +13,9 @@ services:
     container_name: sebastian-db
     image: mysql
     environment:
-      MYSQL_DATABASE: sebastian
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_ALLOW_EMPTY_PASSWORD: yes
+      MYSQL_DATABASE: "${MYSQL_DATABASE}"
+      MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD}"
+      MYSQL_ALLOW_EMPTY_PASSWORD: "${MYSQL_ALLOW_EMPTY_PASSWORD}"
     ports:
       - '3306:3306'
     volumes:

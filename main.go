@@ -7,17 +7,12 @@ import (
 )
 
 func main() {
-	db, err := sql.Open("mysql", "root:password0301@tcp(mysql)/sebastian")
+	dbConf := "root:password0301@tcp(mysql)/sebastian"
+	db, err := sql.Open("mysql", dbConf)
 	if err != nil {
 		fmt.Println(err.Error())
 	} else {
 		fmt.Println("connect")
 	}
 	defer db.Close()
-	_, err = db.Exec("CREATE TABLE dictionary (id INT AUTO_INCREMENT, name TEXT, mean TEXT, PRIMARY KEY (id)) DEFAULT CHARSET=utf8;")
-	if err != nil {
-		fmt.Println(err.Error())
-	} else {
-		fmt.Println("create")
-	}
 }
