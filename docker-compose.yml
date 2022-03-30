@@ -7,16 +7,3 @@ services:
       - '8000:8000'
     volumes:
       - .:/app
-    depends_on:
-      - db
-  db:
-    container_name: sebastian-db
-    image: mysql
-    environment:
-      MYSQL_DATABASE: "${MYSQL_DATABASE}"
-      MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD}"
-      MYSQL_ALLOW_EMPTY_PASSWORD: "${MYSQL_ALLOW_EMPTY_PASSWORD}"
-    ports:
-      - '3306:3306'
-    volumes:
-      - ./initdb.d/:/docker-entrypoint-initdb.d/

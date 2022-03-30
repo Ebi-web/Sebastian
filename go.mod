@@ -1,3 +1,8 @@
 module sebastian
 
-require github.com/go-sql-driver/mysql v1.6.0 // indirect
+go 1.16
+
+require (
+	golang.org/x/oauth2 v0.0.0-20220309155454-6242fa91716a // indirect
+	google.golang.org/api v0.73.0 // indirect
+)

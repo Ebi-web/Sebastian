@@ -1,18 +1,34 @@
 package main
 
 import (
-	"database/sql"
+	"context"
 	"fmt"
-	_ "github.com/go-sql-driver/mysql"
+	"log"
+
+	"google.golang.org/api/option"
+	"google.golang.org/api/sheets"
 )
 
+var spreadsheetID = "1ncpIaM8AqDLwcJOyHTdPR52SBpZKQQS3F5spX-wDqjc"
+
 func main() {
-	dbConf := "root:password0301@tcp(mysql)/sebastian"
-	db, err := sql.Open("mysql", dbConf)
+	credential := option.WithCredentialsFile("./secret.json")
+
+	srv, err := sheets.NewService(context.TODO(), credential)
 	if err != nil {
-		fmt.Println(err.Error())
-	} else {
-		fmt.Println("connect")
+		log.Fatal(err)
 	}
-	defer db.Close()
+
+	readRange := "A1:B3"
+
+	resp, err := srv.Spreadsheets.Values.Get(spreadsheetID, readRange).Do()
+	if err != nil {
+		log.Fatalln(err)
+	}
+	if len(resp.Values) == 0 {
+		log.Fatalln("data not found")
+	}
+	for _, row := range resp.Values {
+		fmt.Printf("%s, %s\n", row[0], row[1])
+	}
 }
