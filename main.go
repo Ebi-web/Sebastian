@@ -4,14 +4,19 @@ import (
 	"context"
 	"fmt"
 	"log"
+	"os"
 
+	"github.com/joho/godotenv"
+	"github.com/slack-go/slack"
 	"google.golang.org/api/option"
-	"google.golang.org/api/sheets"
+	sheets "google.golang.org/api/sheets/v4"
 )
 
-var spreadsheetID = "1ncpIaM8AqDLwcJOyHTdPR52SBpZKQQS3F5spX-wDqjc"
-
 func main() {
+	err := godotenv.Load("./env/.dev.env")
+	spreadsheetID, botToken := os.Getenv("SPREADSHEET_ID"), os.Getenv("BOT_TOKEN")
+	c := slack.New(botToken)
+
 	credential := option.WithCredentialsFile("./secret.json")
 
 	srv, err := sheets.NewService(context.TODO(), credential)
@@ -19,16 +24,18 @@ func main() {
 		log.Fatal(err)
 	}
 
-	readRange := "A1:B3"
+	readRange := "A:C"
 
-	resp, err := srv.Spreadsheets.Values.Get(spreadsheetID, readRange).Do()
+	resp, err := srv.Spreadsheets.Values.Get(spreadsheetID, readRange).MajorDimension("COLUMNS").Do()
 	if err != nil {
 		log.Fatalln(err)
 	}
 	if len(resp.Values) == 0 {
 		log.Fatalln("data not found")
 	}
-	for _, row := range resp.Values {
-		fmt.Printf("%s, %s\n", row[0], row[1])
+fmt.Print(resp.Values)
+	_, _, err = c.PostMessage("テストチャンネル", slack.MsgOptionText("Hello World", true))
+	if err != nil {
+		panic(err)
 	}
 }

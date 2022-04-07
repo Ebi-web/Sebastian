@@ -3,6 +3,7 @@ module sebastian
 go 1.16
 
 require (
-	golang.org/x/oauth2 v0.0.0-20220309155454-6242fa91716a // indirect
-	google.golang.org/api v0.73.0 // indirect
+	github.com/joho/godotenv v1.4.0
+	github.com/slack-go/slack v0.10.2
+	google.golang.org/api v0.73.0
 )
