@@ -21,7 +21,7 @@ func main() {
 
 	srv, err := sheets.NewService(context.TODO(), credential)
 	if err != nil {
-		log.Fatal(err) // zaprに置換だよ
+		log.Fatal(err) // zaprに置換
 	}
 
 	readRange := "A:C"
